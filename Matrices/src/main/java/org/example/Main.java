@@ -11,18 +11,18 @@ import java.util.Arrays;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     static int [][] mat1 = new int[][] {{1,3,5,9},null,{4,3,9,7}, {5,2,0,9}};
-    static int [][] mat2 = new int[][] {{2,3,4},{4,3,7},{3,5,8}};
+    static int [][] mat2 = new int[][] {{2,3,4},{4,2,7},{3,5,2}};
 
 
     public static void main(String[] args) throws Exception {
 
-        Matrix matrix1 = new Matrix(new int[][] {{1,3,5},{4,3,9}, {5,2,0}});
+        Matrix matrix1 = new Matrix(new int[][] {{1,3,5},{4,3,9}, {5,2,2}});
         Matrix matrix2 = new Matrix(mat2);
-//        System.out.println(Arrays.deepToString(matrix1.matSummation(matrix2).getElements()));
+        System.out.println(Arrays.deepToString(matrix1.matSummation(matrix2).getElements()));
 
 //        System.out.println(Arrays.deepToString(MatrixOperations.squareMatOps(mat2, SqaureOpsTypes.UPPER)));
 
-        System.out.println(Arrays.deepToString(MatrixOperations.squareMatOps(mat2,SqaureOpsTypes.DIAGONAL).getElements()));
+//        System.out.println(Arrays.deepToString(MatrixOperations.squareMatOps(mat2,SqaureOpsTypes.DIAGONAL).getElements()));
 
 
 //        MatrixOperations mo = new MatrixOperations();

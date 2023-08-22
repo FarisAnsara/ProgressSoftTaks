@@ -2,53 +2,20 @@ package org.example.Utils;
 
 
 public class MatrixOperations {
-    static MatrixUtilities mu = new MatrixUtilities();
-
-    //2 Scalar Multiplication
-    public int[][] scalarMultiplication(int[][] mat1, int scalar){
-        int[][] matNew = mu.copyMat(mat1);
-        for (int i = 0; i < mat1.length; i++){
-            System.out.println("TEst");
-            for(int j = 0; j < mat1[0].length; j++){
-                matNew[i][j] = scalar*mat1[i][j];
-            }
-        }
-        return matNew;
-    }
-
-    //3 Transpose
-    public int[][] transposeMat(int[][] arr){
-        int rows = arr.length;
-        int cols = arr[0].length;
-
-        int[][] transpose = new int[cols][rows];
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++) {
-                transpose[j][i] = arr[i][j];
-            }
-        }
-        return transpose;
-    }
 
     //4 Matrix Multiplication
-    public int[][] matMux(int[][] mat1, int[][]mat2) throws Exception {
+    public int[][] matMux(Matrix mat1, Matrix mat2) throws Exception {
 
-        int cols = mat1[0].length;
-        int rows = mat2.length;
-        if (cols != rows) {
-            throw new Exception("Cannot perform matrix multiplication because the number of columns of the left hand matrix does not equal the number of rows of the right hand matrix");
-        }
-        int[][] mux = new int[mat1.length][mat2[0].length];
-        int[][] copy1 = mu.copyMat(mat1);
-        int[][] copy2 = mu.copyMat(mat2);
+        int cols = mat1.getColumns();
+        int rows = mat2.getRows();
+        checkMultiplySizes(cols, rows);
+        int[][] mux = new int[mat1.getRows()][mat2.getColumns()];
 
-        int[][] mat2Trans = transposeMat(copy2);
-
-        for(int i = 0; i < mat1.length; i++){
-            for(int j =0; j < mat2[0].length; j++){
+        for(int i = 0; i < mat1.getRows(); i++){
+            for(int j =0; j < mat2.getColumns(); j++){
                 int tot = 0;
-                for(int k = 0; k < mat2.length; k++){
-                    tot += mat1[i][k] * mat2[k][j];
+                for(int k = 0; k < mat2.getRows(); k++){
+                    tot += mat1.getVal(i,k) * mat2.getVal(k,j);
                 }
                 mux[i][j] = tot;
             }
@@ -56,10 +23,12 @@ public class MatrixOperations {
         return mux;
     }
 
+
+
     //5 Submatrix
     // use "-1" in order to not cancel anything
-    public int[][] subMat (int[][] arr ,int[] delRow, int[] delCol) throws Exception{
-        int[][] copy = mu.copyMat(arr);
+    public int[][] subMat (int[][] arr , int[] delCol, int... delRow) throws Exception{
+        int[][] copy = MatrixUtilities.copyMat(arr);
 
         if (copy.length == delRow.length || copy[0].length == delCol.length){
             throw new Exception("Deleted the whole Matrix");
@@ -90,10 +59,10 @@ public class MatrixOperations {
         int newRow = copy.length - delRow.length;
         int newCol = copy[0].length - delCol.length;
 
-        if(mu.contains(delRow,-1)){
+        if(MatrixUtilities.contains(delRow,-1)){
             newRow = arr.length;
         }
-        if (mu.contains(delCol, -1)){
+        if (MatrixUtilities.contains(delCol, -1)){
             newCol = arr[0].length;
         }
 
@@ -101,10 +70,10 @@ public class MatrixOperations {
         int rowInd = 0;
 
         for(int i = 0; i < copy.length; i++){
-            if(!mu.contains(delRow, i)){
+            if(!MatrixUtilities.contains(delRow, i)){
                 int colInd = 0;
                 for(int j = 0; j < copy[0].length; j++){
-                    if(!mu.contains(delCol,j)){
+                    if(!MatrixUtilities.contains(delCol,j)){
                         subMat[rowInd][colInd] = copy[i][j];
                         colInd++;
                     }
@@ -120,7 +89,7 @@ public class MatrixOperations {
     public static Matrix squareMatOps(int[][] arr, SqaureOpsTypes needed) throws Exception {
         SquareMatrix sq = new SquareMatrix();
         Diagonal diagonal = new Diagonal();
-        if(!mu.checkSquare(arr))
+        if(!MatrixUtilities.checkSquare(arr))
             throw new Exception("Cannot perform square matrix operations as Matrix is not square");
         return switch (needed) {
             case DIAGONAL -> diagonal.doOperation(arr);
@@ -137,7 +106,7 @@ public class MatrixOperations {
 
     //7 determinant
     public int determinant(int[][] arr) throws Exception {
-        if (!mu.checkSquare(arr)) {
+        if (!MatrixUtilities.checkSquare(arr)) {
             throw new Exception("Matrix is not square, so cannot calculate determinant.");
         }
         int det = 0;
@@ -154,6 +123,13 @@ public class MatrixOperations {
         return det;
     }
 
+
+    // Exceptions
+    private static void checkMultiplySizes(int cols, int rows) throws Exception {
+        if (cols != rows) {
+            throw new Exception("Cannot perform matrix multiplication because the number of columns of the left hand matrix does not equal the number of rows of the right hand matrix");
+        }
+    }
 
 
 }

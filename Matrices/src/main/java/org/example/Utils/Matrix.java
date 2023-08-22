@@ -1,14 +1,13 @@
 package org.example.Utils;
 
 public class Matrix {
-
     private int rows;
     private int columns;
     private int[][] elements;
 
-
     public Matrix(int[][] elements) {
         validateElements(elements);
+        checkColumns(elements);
         this.elements = elements;
         this.rows = elements.length;
         this.columns = elements[0].length;
@@ -41,6 +40,28 @@ public class Matrix {
         return new Matrix(matNew);
     }
 
+    public Matrix scalarMultiplication(int scalar){
+        int[][] matNew = new int[this.rows][this.columns];
+        for (int i = 0; i < this.rows; i++){
+            for(int j = 0; j < this.columns; j++){
+                matNew[i][j] = scalar*this.getVal(i,j);
+            }
+        }
+        return new Matrix(matNew);
+    }
+
+    public Matrix transposeMat(){
+        int rows = this.getRows();
+        int cols = this.getColumns();
+        int[][] transpose = new int[cols][rows];
+
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++) {
+                transpose[j][i] = this.getVal(i,j);
+            }
+        }
+        return new Matrix(transpose);
+    }
 
     private void validateElements(int[][] elements) {
         if(elements == null){
@@ -62,5 +83,14 @@ public class Matrix {
             throw new IllegalArgumentException("Matrix sizes do not match i.e. cannot perform matrix addition");
         }
     }
+
+    private static void checkColumns(int[][] elements) {
+        for(int i = 0; i < elements.length; i++){
+            if(elements[i].length != elements[0].length){
+                throw new IllegalArgumentException("Check number of columns in all rows of the matrix is the same.");
+            }
+        }
+    }
+
 
 }
