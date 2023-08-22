@@ -1,8 +1,8 @@
 package org.example.Utils;
 
 public class MatrixUtilities {
-    public boolean checkSize(int[][] arr1, int[][] arr2){
-        return arr1.length == arr2.length && arr1[0].length == arr2[0].length;
+    public boolean checkSize(Matrix arr1, Matrix arr2){
+        return arr1.getRows() == arr2.getRows() && arr1.getColumns() == arr2.getColumns();
     }
     public int[][] copyMat(int[][] arr) {
         int[][] copy = new int[arr.length][arr[0].length];

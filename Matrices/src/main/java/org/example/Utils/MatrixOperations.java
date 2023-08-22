@@ -1,22 +1,8 @@
 package org.example.Utils;
 
+
 public class MatrixOperations {
     static MatrixUtilities mu = new MatrixUtilities();
-
-    //1 Matrix Summations
-    public int[][] matSummation(int[][] mat1, int[][] mat2) throws Exception {
-        if(!mu.checkSize(mat1,mat2)){
-            throw new Exception("Matrix sizes do not match i.e. cannot perform matrix addition");
-        }
-        int[][] matNew = mu.copyMat(mat1);
-        for (int i = 0; i < mat1.length; i++){
-            for(int j = 0; j < mat1[0].length; j++){
-                matNew[i][j] = mat1[i][j] + mat2[i][j];
-
-            }
-        }
-        return matNew;
-    }
 
     //2 Scalar Multiplication
     public int[][] scalarMultiplication(int[][] mat1, int scalar){
@@ -131,14 +117,15 @@ public class MatrixOperations {
     }
 
     //6 SquareMatOps
-    public int[][] squareMatOps(int[][] arr, int needed) throws Exception {
+    public static Matrix squareMatOps(int[][] arr, SqaureOpsTypes needed) throws Exception {
         SquareMatrix sq = new SquareMatrix();
+        Diagonal diagonal = new Diagonal();
         if(!mu.checkSquare(arr))
             throw new Exception("Cannot perform square matrix operations as Matrix is not square");
         return switch (needed) {
-            case 1 -> sq.diagonal(arr);
-            case 2 -> sq.upper(arr);
-            case 3 -> sq.lower(arr);
+            case DIAGONAL -> diagonal.doOperation(arr);
+//            case UPPER -> sq.diagonal(arr, SqaureOpsTypes.UPPER);
+//            case LOWER -> sq.diagonal(arr, SqaureOpsTypes.LOWER);
             default -> throw new Exception("Choose valid entry for operation needed \n" +
                     " enter 1 for diagonal matrix \n" +
                     " enter 2 for upper triangle \n" +
@@ -166,6 +153,8 @@ public class MatrixOperations {
         }
         return det;
     }
+
+
 
 }
 
