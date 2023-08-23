@@ -70,6 +70,7 @@ public class Matrix {
         int[] rowToCancel = new int[numOfRowsToCancel];
         int[] columnToCancel = new int[numOfColumnsToCancel];
 
+        rowsAndColsToCancel(numOfRowsToCancel, indexesToCancel, rowToCancel, columnToCancel);
         exceptionsSubmatrix(numOfRowsToCancel, indexesToCancel, rowToCancel, columnToCancel, numOfColumnsToCancel);
 
         int newRow = this.getRows() - numOfRowsToCancel;
@@ -157,7 +158,6 @@ public class Matrix {
     }
 
     private void exceptionsSubmatrix(int numOfRowsToCancel, int[] indexesToCancel, int[] rowToCancel, int[] columnToCancel, int numOfColumnsToCancel) throws Exception {
-        rowsAndColsToCancel(numOfRowsToCancel, indexesToCancel, rowToCancel, columnToCancel);
         checkHowMuchDeleted(numOfRowsToCancel, numOfColumnsToCancel);
         checkRowOrColumnExceedMax(numOfRowsToCancel, rowToCancel, columnToCancel, numOfColumnsToCancel);
     }
