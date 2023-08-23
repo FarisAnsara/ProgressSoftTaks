@@ -193,7 +193,7 @@ public class Matrix {
         }
     }
 
-    private static boolean contains(int[] arr, int key){
+    private boolean contains(int[] arr, int key){
         for (int i : arr){
             if (i == key){
                 return true;
