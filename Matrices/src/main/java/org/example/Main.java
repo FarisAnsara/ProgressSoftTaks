@@ -1,11 +1,6 @@
 package org.example;
 
-import org.example.Utils.Diagonal;
 import org.example.Utils.Matrix;
-import org.example.Utils.MatrixOperations;
-import org.example.Utils.SqaureOpsTypes;
-
-import java.util.Arrays;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -15,8 +10,6 @@ public class Main{
         int [][] mat2 = new int[][] {{2,3,4},{4,2,7},{3,5,2}};
         Matrix matrix2 = new Matrix(mat2);
         System.out.println(matrix2.determinant());
-
-
     }
 }
 

@@ -52,6 +52,24 @@ public class Matrix {
         return new Matrix(matNew);
     }
 
+    public int[][] dotProduct(Matrix mat2) throws Exception {
+
+        int cols = this.getColumns();
+        int rows = mat2.getRows();
+        checkMultiplySizes(cols, rows);
+        int[][] mux = new int[this.getRows()][mat2.getColumns()];
+
+        for (int i = 0; i < this.getRows(); i++) {
+            for (int j = 0; j < mat2.getColumns(); j++) {
+                int tot = 0;
+                for (int k = 0; k < mat2.getRows(); k++) {
+                    tot += this.getVal(i, k) * mat2.getVal(k, j);
+                }
+                mux[i][j] = tot;
+            }
+        }
+        return mux;
+    }
     public Matrix transposeMat(){
         int rows = this.getRows();
         int cols = this.getColumns();
@@ -63,6 +81,25 @@ public class Matrix {
             }
         }
         return new Matrix(transpose);
+    }
+
+    public Matrix squareMatOps(SqaureOpsTypes needed) throws Exception {
+        Diagonal diagonal = new Diagonal();
+        Upper upper = new Upper();
+        Lower lower = new Lower();
+        int [][] matrix = this.getElements();
+        if(!this.checkSquare()) {
+            throw new Exception("Cannot perform square matrix operations as Matrix is not square");
+        }
+        return switch (needed) {
+            case DIAGONAL -> diagonal.doOperation(matrix);
+            case UPPER -> upper.doOperation(matrix);
+            case LOWER -> lower.doOperation(matrix);
+            default -> throw new Exception("Choose valid entry for operation needed \n" +
+                    " enter 1 for diagonal matrix \n" +
+                    " enter 2 for upper triangle \n" +
+                    " enter 3 for lower triangle");
+        };
     }
 
     public Matrix subMatrix(int numOfRowsToCancel, int[] indexesToCancel) throws Exception {
@@ -132,6 +169,12 @@ public class Matrix {
     private void sameSize(Matrix mat2){
         if(this.rows != mat2.getRows() && this.columns != mat2.getColumns()){
             throw new IllegalArgumentException("Matrix sizes do not match i.e. cannot perform matrix addition");
+        }
+    }
+
+    private void checkMultiplySizes(int cols, int rows) throws Exception {
+        if (cols != rows) {
+            throw new Exception("Cannot perform matrix multiplication because the number of columns of the left hand matrix does not equal the number of rows of the right hand matrix");
         }
     }
 
