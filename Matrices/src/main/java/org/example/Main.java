@@ -15,3 +15,7 @@ public class Main{
 
 // Static method mostly operates on arguments, almost all static method accepts arguments, perform some calculation and return value
 // If the function of the method will remain static across class hierarchy (you can not override static methods in Java)
+
+
+// TODO handle exception
+// TODO naming
