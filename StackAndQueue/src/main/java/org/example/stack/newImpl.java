@@ -8,7 +8,6 @@ public class newImpl {
     String[] stack;
     boolean isDynamic;
 
-
     public newImpl(int capacity, boolean isDynamic) {
         validateCapacity(capacity);
         this.capacity = capacity;

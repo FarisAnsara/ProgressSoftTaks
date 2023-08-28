@@ -1,11 +1,14 @@
 package org.example;
-import java.lang.reflect.Array;
+import org.example.stack.Dynamic;
+import org.example.stack.Fixed;
+import org.example.stack.State;
+
 import java.util.Arrays;
 
 public class Stack<E> {
     private int size;
     private E[] stack;
-    private boolean isDynamic;
+    private final State state;
 //    private final Class<E> stackClass;
     private Stack<E> newStack;
     private int top = -1;
@@ -15,18 +18,19 @@ public class Stack<E> {
     public Stack(){
         this.size = 0;
         this.stack =(E[]) new Object[this.size];
-        this.isDynamic = true;
+        this.state = new Dynamic();
     }
     public Stack(int size){
         // TODO check size if negative or zero
         this.stack =(E[]) new Object[size];
         this.size = size;
+        this.state = new Fixed();
     }
 
     // fixed
     public void push(E value){
         checkValueType(value);
-        if(isDynamic){ // for fixed Stack isDynamic equal null (variable not initialize)
+        if(state instanceof Dynamic){ // for fixed Stack isDynamic equal null (variable not initialize)
             pushDynamic(value);
             System.out.println(this.printStack());
         } else {
@@ -37,7 +41,7 @@ public class Stack<E> {
 
     public E[] pop(){
         checkEmptyStack();
-        newStack = new Stack(size-1);
+        newStack = new Stack<>(size-1);
         System.out.println("removed the last element: " + this.stack[top] + "\nnew stack is:");
         for (int i = 0; i < top + 1; i++){
             if(i == top){
@@ -65,7 +69,7 @@ public class Stack<E> {
     }
 
     private void pushDynamic(E value){
-        newStack = new Stack(this.size+1);
+        newStack = new Stack<>(this.size+1);
         for (int i = 0; i <= top + 1; i++){
             if(top+1 == i){
                 newStack.push(value);
