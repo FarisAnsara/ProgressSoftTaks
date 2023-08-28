@@ -6,37 +6,38 @@ public class Stack<E> {
     private int size;
     private E[] stack;
     private boolean isDynamic;
-    private final Class<E> stackClass;
+//    private final Class<E> stackClass;
     private Stack<E> newStack;
     private int top = -1;
 
     // Overloading to create either dynamic stack or none-dynamic stack
-    public Stack(Class<E> clazz){
+    // TODO with generic no need to re-check about class type
+    public Stack(){
         this.size = 0;
-        this.stack = (E[]) Array.newInstance(clazz, size);
-        this.stackClass = clazz;
+        this.stack =(E[]) new Object[this.size];
         this.isDynamic = true;
     }
-    public Stack(Class<E> clazz, int size){
-        this.stack = (E[]) Array.newInstance(clazz, size);
+    public Stack(int size){
+        // TODO check size if negative or zero
+        this.stack =(E[]) new Object[size];
         this.size = size;
-        this.stackClass = clazz;
     }
 
     // fixed
     public void push(E value){
         checkValueType(value);
-        if(isDynamic){
+        if(isDynamic){ // for fixed Stack isDynamic equal null (variable not initialize)
             pushDynamic(value);
             System.out.println(this.printStack());
         } else {
+            // TODO lets say Stack size = 5 and it have 5 elements, then when try to push element number 6 must be return exception (out of bounds)
             this.stack[++top] = value;
         }
     }
 
     public E[] pop(){
         checkEmptyStack();
-        newStack = new Stack(stackClass, size-1);
+        newStack = new Stack(size-1);
         System.out.println("removed the last element: " + this.stack[top] + "\nnew stack is:");
         for (int i = 0; i < top + 1; i++){
             if(i == top){
@@ -50,7 +51,7 @@ public class Stack<E> {
     }
 
     public int size(){
-        checkEmptyStack();
+        checkEmptyStack(); // TODO getSize no need to check if Empty
         return this.top+1;
     }
 
@@ -64,7 +65,7 @@ public class Stack<E> {
     }
 
     private void pushDynamic(E value){
-        newStack = new Stack(stackClass, this.size+1);
+        newStack = new Stack(this.size+1);
         for (int i = 0; i <= top + 1; i++){
             if(top+1 == i){
                 newStack.push(value);
@@ -86,8 +87,10 @@ public class Stack<E> {
     }
 
     private void checkValueType(E value) {
+        // TODO as expected from checkValueType -> to check value datatype to be match as generic type or to match as stackClass variable
+        //  ex.(value to be from Integer type, value to be from String type)
         if(value == null){
-            throw new IllegalArgumentException("argument needs to be of type" + this.stackClass);
+            throw new IllegalArgumentException("argument needs to be of type" );
         }
     }
 

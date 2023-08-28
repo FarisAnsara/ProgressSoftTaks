@@ -6,10 +6,10 @@ import java.util.Arrays;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Stack<Integer> e = new Stack<>(Integer.class);
-        e.push(5);
-        e.push(8);
-        e.push(78);
+        Stack<String> e = new Stack();
+        e.push("5");
+        e.push("8");
+        e.push("hello duha");
 
         e.pop();
         System.out.println(e.printStack());
