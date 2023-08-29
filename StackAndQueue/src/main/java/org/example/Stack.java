@@ -32,7 +32,7 @@ public class Stack<E> {
         checkValueType(value);
         if(state instanceof Dynamic){ // for fixed Stack isDynamic equal null (variable not initialize)
             pushDynamic(value);
-            System.out.println(this.printStack());
+//            System.out.println(this.printStack());
         } else {
             // TODO lets say Stack size = 5 and it have 5 elements, then when try to push element number 6 must be return exception (out of bounds)
             this.stack[++top] = value;
@@ -82,7 +82,7 @@ public class Stack<E> {
         this.size += 1;
     }
 
-    private E[] getElements(){
+    private E[] getElements() {
         return stack;
     }
 //

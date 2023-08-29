@@ -8,7 +8,7 @@ public class newImpl {
     String[] stack;
     boolean isDynamic;
 
-    public newImpl(int capacity, boolean isDynamic) {
+    public newImpl(int capacity) {
         validateCapacity(capacity);
         this.capacity = capacity;
         this.size = 0;
@@ -21,6 +21,10 @@ public class newImpl {
         this.size = 0;
         this.stack = new String[this.capacity];
         this.isDynamic = true;
+    }
+
+    public String[] getStack() {
+        return stack;
     }
 
     public void push(String value) {
